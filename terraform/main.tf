@@ -140,6 +140,29 @@ module "delete_user_function" {
   depends_on    = [module.delete_user_code_bucket]
 }
 
+# DynamoDB Table
+module "users_table" {
+  source = "./modules/dynamodb"
+  name   = "users"
+  attributes = [
+    {
+      name = "RecordId"
+      type = "S"
+    },
+    {
+      name = "name"
+      type = "S"
+    }
+  ]
+  billing_mode          = "PROVISIONED"
+  hash_key              = "RecordId"
+  range_key             = "name"
+  read_capacity         = 20
+  write_capacity        = 20
+  ttl_attribute_name    = "TimeToExist"
+  ttl_attribute_enabled = true
+}
+
 # API Gateway configuration
 resource "aws_api_gateway_rest_api" "rest_api" {
   name = "api"
