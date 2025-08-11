@@ -161,7 +161,7 @@ resource "aws_api_gateway_resource" "create_user_resource" {
 }
 
 resource "aws_api_gateway_method" "create_user_resource_method" {
-  rest_api_id      = aws_api_gateway_rest_api.rest_api.id  
+  rest_api_id      = aws_api_gateway_rest_api.rest_api.id
   resource_id      = aws_api_gateway_resource.create_user_resource.id
   api_key_required = false
   http_method      = "ANY"
@@ -174,7 +174,7 @@ resource "aws_api_gateway_integration" "create_user_resource_method_integration"
   http_method             = aws_api_gateway_method.create_user_resource_method.http_method
   integration_http_method = "ANY"
   type                    = "AWS_PROXY"
-  uri                     = module.create_user_code_bucket.invoke_arn
+  uri                     = module.create_user_function.invoke_arn
 }
 
 resource "aws_api_gateway_method_response" "create_user_resource_method_response_200" {
@@ -216,7 +216,7 @@ resource "aws_api_gateway_integration" "get_users_resource_method_integration" {
   http_method             = aws_api_gateway_method.get_users_resource_method.http_method
   integration_http_method = "ANY"
   type                    = "AWS_PROXY"
-  uri                     = module.get_users_code_bucket.invoke_arn
+  uri                     = module.get_users_function.invoke_arn
 }
 
 resource "aws_api_gateway_method_response" "get_users_resource_method_response_200" {
@@ -258,7 +258,7 @@ resource "aws_api_gateway_integration" "delete_user_resource_method_integration"
   http_method             = aws_api_gateway_method.delete_user_resource_method.http_method
   integration_http_method = "ANY"
   type                    = "AWS_PROXY"
-  uri                     = module.delete_user_code_bucket.invoke_arn
+  uri                     = module.delete_user_function.invoke_arn
 }
 
 resource "aws_api_gateway_method_response" "delete_user_resource_method_response_200" {
